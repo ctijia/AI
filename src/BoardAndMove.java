@@ -86,7 +86,7 @@ public class BoardAndMove {
 	            connection.setRequestProperty("connection", "Keep-Alive");
 	            connection.setRequestProperty("user-agent",
 	                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-	            connection.setRequestProperty("x-api-key", "x-api-key ");
+	            connection.setRequestProperty("x-api-key", "api-key ");
 		           connection.setRequestProperty("userid","743");
 		           connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded ");
 		           //connection.setRequestProperty("gameType","TTT");
@@ -168,7 +168,6 @@ public class BoardAndMove {
 	
 	public static String postMakeMove(Integer gameId,Integer x,Integer y) {
 		 String postMove = "type=move&gameId="+gameId.toString()+"&teamId=1089&move="+x.toString()+","+y.toString();
-		 System.out.println(postMove);
 		  String url=BoardAndMove.sendPost("http://www.notexponential.com/aip2pgaming/api/index.php",postMove);
 	        System.out.println(url);
 	         
