@@ -36,7 +36,7 @@ public class BoardAndMove {
 	            connection.setRequestProperty("connection", "Keep-Alive");
 	            connection.setRequestProperty("user-agent",
 	                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-	            connection.setRequestProperty("x-api-key", "a38c4925406d13f0af06 ");
+	            connection.setRequestProperty("x-api-key", "api-key ");
 		           connection.setRequestProperty("userid","743");
 	           connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded ");
 	           
@@ -86,7 +86,7 @@ public class BoardAndMove {
 	            connection.setRequestProperty("connection", "Keep-Alive");
 	            connection.setRequestProperty("user-agent",
 	                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-	            connection.setRequestProperty("x-api-key", "a38c4925406d13f0af06 ");
+	            connection.setRequestProperty("x-api-key", "x-api-key ");
 		           connection.setRequestProperty("userid","743");
 		           connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded ");
 		           //connection.setRequestProperty("gameType","TTT");
