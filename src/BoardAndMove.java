@@ -36,8 +36,8 @@ public class BoardAndMove {
 	            connection.setRequestProperty("connection", "Keep-Alive");
 	            connection.setRequestProperty("user-agent",
 	                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-	           connection.setRequestProperty("x-api-key", "x-api-key ");
-	           connection.setRequestProperty("userid","userid");
+	            connection.setRequestProperty("x-api-key", "a38c4925406d13f0af06 ");
+		           connection.setRequestProperty("userid","743");
 	           connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded ");
 	           
 	            // 建立实际的连接
@@ -86,8 +86,8 @@ public class BoardAndMove {
 	            connection.setRequestProperty("connection", "Keep-Alive");
 	            connection.setRequestProperty("user-agent",
 	                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-	            connection.setRequestProperty("x-api-key", "x-api-key ");
-		           connection.setRequestProperty("userid","userid");
+	            connection.setRequestProperty("x-api-key", "a38c4925406d13f0af06 ");
+		           connection.setRequestProperty("userid","743");
 		           connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded ");
 		           //connection.setRequestProperty("gameType","TTT");
 	            // 发送POST请求必须设置如下两行
@@ -128,8 +128,8 @@ public class BoardAndMove {
 	        
 	}
 	    
-	public JSONObject getRecentMove() {
-		  String getMove = "type=moves&gameId=1352&count=1";
+	public JSONObject getRecentMove(Integer gameId) {
+		  String getMove = "type=moves&gameId="+gameId.toString()+"&count=1";
 
 		  String y=BoardAndMove.sendGet("http://www.notexponential.com/aip2pgaming/api/index.php",getMove);
 	        System.out.println(y);
@@ -139,11 +139,22 @@ public class BoardAndMove {
 	        JSONArray jsonArray = JSONArray.fromObject(data);//并将DS内容取出转为json数组  
 	        JSONObject object = jsonArray.getJSONObject(0);  
 
-	        return object;
+	        return object;//{"moveId":"7551","gameId":"1352","teamId":"1089","move":"4,4","symbol":"O","moveX":"4","moveY":"4"} object.getString("")
 	}
 	
-	public JSONObject getBoardMap() {
-		  String getBoardMap = "type=boardMap&gameId=1352";
+	public static int createGame(int anotherteamId) {
+		Integer t = new Integer(anotherteamId);
+		  String creategame = "type=game&teamId1=1089&gameType=TTT"+"&teamId2="+t.toString();
+		  String y=BoardAndMove.sendPost("http://www.notexponential.com/aip2pgaming/api/index.php",creategame);
+	         
+	        JSONObject jsonObject = JSONObject.fromObject(y);//字符串转json对象  
+	        String gameId = jsonObject.getString("gameId");//获取DS内容  
+            
+	        return Integer.parseInt(gameId);
+	}
+	
+	public JSONObject getBoardMap(Integer gameId) {
+		  String getBoardMap = "type=boardMap&gameId="+gameId.toString();
 		  String y=BoardAndMove.sendGet("http://www.notexponential.com/aip2pgaming/api/index.php",getBoardMap);
 	        System.out.println(y);
 	         
@@ -155,12 +166,13 @@ public class BoardAndMove {
 	        return object;
 	}
 	
-	public static String postMakeMove() {
-		 String postMove = "type=move&gameId=1352&teamId=1089&move=5,4";
-		  String y=BoardAndMove.sendPost("http://www.notexponential.com/aip2pgaming/api/index.php",postMove);
-	        System.out.println(y);
+	public static String postMakeMove(Integer gameId,Integer x,Integer y) {
+		 String postMove = "type=move&gameId="+gameId.toString()+"&teamId=1089&move="+x.toString()+","+y.toString();
+		 System.out.println(postMove);
+		  String url=BoardAndMove.sendPost("http://www.notexponential.com/aip2pgaming/api/index.php",postMove);
+	        System.out.println(url);
 	         
-	        JSONObject jsonObject = JSONObject.fromObject(y);//字符串转json对象  
+	        JSONObject jsonObject = JSONObject.fromObject(url);//字符串转json对象  
             String status = jsonObject.getString("code");
             System.out.println(status);
             if(status.equals("FAIL"))
@@ -169,8 +181,8 @@ public class BoardAndMove {
             	return  jsonObject.getString("moveId");
 	}
 	
-	public static String[] getBoardString(int size) {
-      	String getBoardString = "type=boardString&gameId=1352";
+	public static String[] getBoardString(Integer gameId) {
+      	String getBoardString = "type=boardString&gameId="+gameId.toString();
       	String y=BoardAndMove.sendGet("http://www.notexponential.com/aip2pgaming/api/index.php",getBoardString);
       	JSONObject jsonObject = JSONObject.fromObject(y);//字符串转json对象  
         String data = jsonObject.getString("output");//获取DS内容     
@@ -181,8 +193,9 @@ public class BoardAndMove {
 
 	    public static void main(String[] args) { 
 
-	    	String[] s = getBoardString(12);
-	    	 System.out.println(s[4].charAt(4));
+	    	String[] row = getBoardString(1352);
+	    	for(int i=0;i<row.length;i++)
+	           System.out.println(row[i]);
 	    }
 }
 //1089 1090
